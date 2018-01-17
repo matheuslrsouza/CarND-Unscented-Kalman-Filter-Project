@@ -93,11 +93,15 @@ int main()
           float x_gt;
     	  float y_gt;
     	  float vx_gt;
-    	  float vy_gt;
+        float vy_gt;
+        float yaw_gt;
+        float yaw_rate_gt;
     	  iss >> x_gt;
     	  iss >> y_gt;
     	  iss >> vx_gt;
-    	  iss >> vy_gt;
+        iss >> vy_gt;
+        iss >> yaw_gt;
+        iss >> yaw_rate_gt;
     	  VectorXd gt_values(4);
     	  gt_values(0) = x_gt;
     	  gt_values(1) = y_gt; 
@@ -116,6 +120,7 @@ int main()
     	  double p_y = ukf.x_(1);
     	  double v  = ukf.x_(2);
     	  double yaw = ukf.x_(3);
+    	  double yaw_rate = ukf.x_(4);
 
     	  double v1 = cos(yaw)*v;
     	  double v2 = sin(yaw)*v;
@@ -124,6 +129,18 @@ int main()
     	  estimate(1) = p_y;
     	  estimate(2) = v1;
     	  estimate(3) = v2;
+
+        ofstream myfile;
+        myfile.open("../data/data_gt_and_pred.txt", fstream::out | fstream::app);
+
+        myfile << x_gt << " " << p_x << " "
+               << y_gt << " " << p_y << " "
+               << vx_gt << " " << v1 << " "
+               << vy_gt << " " << v2 << " "
+               << yaw_gt << " " << yaw << " "
+               << yaw_rate_gt << " " << yaw_rate << " " << '\n';
+
+        myfile.close();
     	  
     	  estimations.push_back(estimate);
 

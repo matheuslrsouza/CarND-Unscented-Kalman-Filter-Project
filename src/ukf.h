@@ -67,6 +67,17 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  ///* Measurement dimension
+  int n_z_;
+
+  ///* Sigma points in measurement space
+  MatrixXd Zsig_;
+
+  ///* mean predicted measurement
+  VectorXd z_pred_;
+
+  ///* 
+  //vector<float> nis;
 
   /**
    * Constructor
